@@ -29,3 +29,13 @@ Add this line to your Packages/manifest.json:
 
     "com.github.idbrii.unity-astar": "https://github.com/idbrii/unity-astar.git#latest-release",
 
+
+## Visualization
+
+The AStar.Vis module simplifies displaying path queries. You can set a grid of
+SpriteRenderers to be your grid and use CellGrid to display queries.
+
+* ExampleGrid - Placeholder for your implementation. Holds a byte[,] and a list of sprites that represent the grid.
+* CellGrid - Manager for visualizing the grid using the list of sprites.
+* DrawPathOnClick - Makes the grid clickable for easier demonstration.
+

@@ -10,20 +10,26 @@ using Object = UnityEngine.Object;
 
 namespace AStar.Visualize
 {
-    public class VisualizeAStar : MonoBehaviour
+    /// Draw a path between two ICellVisuals. This component helps to make an
+    /// easy demo, but your game probably has a better way of selecting paths.
+    class DrawPathOnClick : MonoBehaviour
     {
-        CellGrid _Grid;
+        GridVisualizer _Grid;
+        ExampleGrid _GridInWorld;
 
         Camera _MainCam;
 
-        CellPosition _Start;
-        CellPosition _End;
+        ICellVisual _Start;
+        ICellVisual _End;
+
+        PathFinder _Pather;
 
         bool _IsDirty;
 
         void Awake()
         {
-            _Grid = GetComponent<CellGrid>();
+            _GridInWorld = GetComponent<ExampleGrid>();
+            _Grid = GetComponent<GridVisualizer>();
         }
 
         void Start()
@@ -37,6 +43,12 @@ namespace AStar.Visualize
                     && 0 < position.y && position.y < Screen.height);
         }
 
+        void OnGUI()
+        {
+            GUILayout.Label("Left click to set destination.");
+            GUILayout.Label("Right click to set start point.");
+        }
+
         void Update()
         {
             var pos = Mouse.current.position.ReadValue();
@@ -48,18 +60,18 @@ namespace AStar.Visualize
             if (_Start == null)
             {
                 _Start = _Grid.GetCell(0,0);
-                _Start.SelectAsStart();
+                _Start.ShowPath(0f);
             }
 
             if (Mouse.current.rightButton.isPressed)
             {
                 SetToItemUnderMouse(pos, ref _Start);
-                _Start.SelectAsStart();
+                _Start.ShowPath(0f);
             }
             if (Mouse.current.leftButton.isPressed)
             {
                 SetToItemUnderMouse(pos, ref _End);
-                _End.SelectAsEnd();
+                _Start.ShowPath(1f);
             }
 
             if (_IsDirty
@@ -71,27 +83,37 @@ namespace AStar.Visualize
             }
         }
 
-        void SetToItemUnderMouse(Vector2 pos, ref CellPosition cell)
+        void SetToItemUnderMouse(Vector2 pos, ref ICellVisual cell)
         {
             var world_pos = _MainCam.ScreenToWorldPoint(pos);
             if (cell != null)
             {
-                cell.ClearSelection();
+                cell.ShowCost();
             }
             cell = _Grid.FindClosestToPoint(world_pos);
             _IsDirty = true;
         }
 
-        void NavigateBetween(CellPosition start, CellPosition destination)
+        void NavigateBetween(ICellVisual start, ICellVisual destination)
         {
-            foreach (var c in _Grid._Cells)
+            if (_Pather == null)
             {
-                c.ClearSelection();
+                var grid = _GridInWorld._Grid;
+                Debug.Log($"Creating path for grid[{grid.GetLength(0)},{grid.GetLength(0)}]", this);
+                var opts = new PathFinderOptions{
+                    Diagonals = false,
+                };
+                _Pather = new PathFinder(grid, opts);
             }
-            _Start.SelectAsStart();
-            _End.SelectAsEnd();
-            _Grid.HighlightPath(_Start, _End);
+            var start_pt = _Grid.GetPoint(start);
+            var end_pt = _Grid.GetPoint(destination);
+            //
+            // Here's the important part:
+            // use PathFinder, pass result to HighlightPath.
+            var path = _Pather.FindPath(start_pt, end_pt);
+            _Grid.HighlightPath(start_pt, end_pt, path);
+            //
         }
-        
+
     }
 }
