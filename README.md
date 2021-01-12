@@ -1,8 +1,6 @@
 AStar
 =====
 
-[![Build Status](https://travis-ci.org/valantonini/AStar.svg?branch=master)](https://travis-ci.org/valantonini/AStar)
-
 An A Star (A*) algorithm for C# based on [Gustavo Franco's implementation](http://www.codeguru.com/csharp/csharp/cs_misc/designtechniques/article.php/c12527/AStar-A-Implementation-in-C-Path-Finding-PathFinder.htm).
 
 The grid is represented as a 2d byte array (byte[,]). Blocked locations are marked as a 0, anything else is considered traversable.
@@ -20,7 +18,7 @@ Options allow for the use of diagonals and punishing direction changes.
 
 ## Dependencies
 
-The AStar Core implementation doesn't have any dependencies. The Tests and Vis use Unity.
+The AStar Core implementation doesn't have any dependencies. The Test and Vis modules use Unity.
 
 
 ## Unity Installation
@@ -31,6 +29,8 @@ Add this line to your Packages/manifest.json:
 
 
 ## Visualization
+
+![the example_pathfind_visualize example scene](https://user-images.githubusercontent.com/43559/104293320-bdaa6d80-5472-11eb-8c87-3ce1f1db0588.gif)
 
 The AStar.Vis module simplifies displaying path queries. You can set a grid of
 SpriteRenderers to be your grid and use CellGrid to display queries.
