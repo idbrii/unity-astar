@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using NUnit.Framework;
-using Shouldly;
 
+using Assert = UnityEngine.Assertions.Assert;
+
+
+// Use Window > General > Test Runner to run tests.
 namespace AStar.Tests
 {
     [TestFixture]
@@ -28,27 +31,27 @@ namespace AStar.Tests
             Console.WriteLine(Helper.PrintGrid(grid));
             Console.WriteLine(Helper.PrintPath(grid, path));
 
-            path[0].X.ShouldBe(2);
-            path[0].Y.ShouldBe(4);
-            path[1].X.ShouldBe(2);
-            path[1].Y.ShouldBe(3);
-            path[2].X.ShouldBe(2);
-            path[2].Y.ShouldBe(2);
-            path[3].X.ShouldBe(1);
-            path[3].Y.ShouldBe(1);
-            path[4].X.ShouldBe(0);
-            path[4].Y.ShouldBe(0);
+            Assert.AreEqual(path[0].X, 2);
+            Assert.AreEqual(path[0].Y, 4);
+            Assert.AreEqual(path[1].X, 2);
+            Assert.AreEqual(path[1].Y, 3);
+            Assert.AreEqual(path[2].X, 2);
+            Assert.AreEqual(path[2].Y, 2);
+            Assert.AreEqual(path[3].X, 1);
+            Assert.AreEqual(path[3].Y, 1);
+            Assert.AreEqual(path[4].X, 0);
+            Assert.AreEqual(path[4].Y, 0);
         }
 
         [Test]
         public void ShouldPathToSelf()
         {
             var path = _pathFinder.FindPath(new Point(1, 1), new Point(1, 1));
-            path.Count.ShouldBe(1);
+            Assert.AreEqual(path.Count, 1);
 
             var node = path[0];
-            node.X.ShouldBe(1);
-            node.Y.ShouldBe(1);
+            Assert.AreEqual(node.X, 1);
+            Assert.AreEqual(node.Y, 1);
         }
 
         [Test]
@@ -56,17 +59,17 @@ namespace AStar.Tests
         {
             var path = _pathFinder.FindPath(new Point(1, 1), new Point(2, 1));
 
-            path.Count.ShouldBe(2);
+            Assert.AreEqual(path.Count, 2);
 
             var node = path[0];
 
-            node.X.ShouldBe(2);
-            node.Y.ShouldBe(1);
+            Assert.AreEqual(node.X, 2);
+            Assert.AreEqual(node.Y, 1);
 
 
             node = path[1];
-            node.X.ShouldBe(1);
-            node.Y.ShouldBe(1);
+            Assert.AreEqual(node.X, 1);
+            Assert.AreEqual(node.Y, 1);
 
 
             Console.WriteLine(Helper.PrintGrid(_grid));
@@ -78,23 +81,23 @@ namespace AStar.Tests
         {
             var path = _pathFinder.FindPath(new Point(1, 1), new Point(4, 2));
             Helper.Print(_grid, path);
-            path.Count.ShouldBe(4);
+            Assert.AreEqual(path.Count, 4);
 
             var item = path[3];
-            item.X.ShouldBe(1);
-            item.Y.ShouldBe(1);
+            Assert.AreEqual(item.X, 1);
+            Assert.AreEqual(item.Y, 1);
 
             item = path[2];
-            item.X.ShouldBe(2);
-            item.Y.ShouldBe(2);
+            Assert.AreEqual(item.X, 2);
+            Assert.AreEqual(item.Y, 2);
 
             item = path[1];
-            item.X.ShouldBe(3);
-            item.Y.ShouldBe(2);
+            Assert.AreEqual(item.X, 3);
+            Assert.AreEqual(item.Y, 2);
 
             item = path[0];
-            item.X.ShouldBe(4);
-            item.Y.ShouldBe(2);
+            Assert.AreEqual(item.X, 4);
+            Assert.AreEqual(item.Y, 2);
         }
 
         [Test]
@@ -107,27 +110,27 @@ namespace AStar.Tests
             Helper.Print(_grid, path);
             PrintCoordinates(path);
 
-            path.Count.ShouldBe(5);
+            Assert.AreEqual(path.Count, 5);
 
             var item = path[4];
-            item.X.ShouldBe(1);
-            item.Y.ShouldBe(1);
+            Assert.AreEqual(item.X, 1);
+            Assert.AreEqual(item.Y, 1);
 
             item = path[3];
-            item.X.ShouldBe(2);
-            item.Y.ShouldBe(1);
+            Assert.AreEqual(item.X, 2);
+            Assert.AreEqual(item.Y, 1);
 
             item = path[2];
-            item.X.ShouldBe(3);
-            item.Y.ShouldBe(1);
+            Assert.AreEqual(item.X, 3);
+            Assert.AreEqual(item.Y, 1);
 
             item = path[1];
-            item.X.ShouldBe(4);
-            item.Y.ShouldBe(1);
+            Assert.AreEqual(item.X, 4);
+            Assert.AreEqual(item.Y, 1);
 
             item = path[0];
-            item.X.ShouldBe(4);
-            item.Y.ShouldBe(2);
+            Assert.AreEqual(item.X, 4);
+            Assert.AreEqual(item.Y, 2);
         }
 
         [Test]
@@ -144,35 +147,35 @@ namespace AStar.Tests
             Helper.Print(_grid, path);
             PrintCoordinates(path);
 
-            path.Count.ShouldBe(7);
+            Assert.AreEqual(path.Count, 7);
 
             var item = path[6];
-            item.X.ShouldBe(1);
-            item.Y.ShouldBe(1);
+            Assert.AreEqual(item.X, 1);
+            Assert.AreEqual(item.Y, 1);
 
             item = path[5];
-            item.X.ShouldBe(1);
-            item.Y.ShouldBe(2);
+            Assert.AreEqual(item.X, 1);
+            Assert.AreEqual(item.Y, 2);
 
             item = path[4];
-            item.X.ShouldBe(1);
-            item.Y.ShouldBe(3);
+            Assert.AreEqual(item.X, 1);
+            Assert.AreEqual(item.Y, 3);
 
             item = path[3];
-            item.X.ShouldBe(2);
-            item.Y.ShouldBe(3);
+            Assert.AreEqual(item.X, 2);
+            Assert.AreEqual(item.Y, 3);
 
             item = path[2];
-            item.X.ShouldBe(3);
-            item.Y.ShouldBe(3);
+            Assert.AreEqual(item.X, 3);
+            Assert.AreEqual(item.Y, 3);
 
             item = path[1];
-            item.X.ShouldBe(3);
-            item.Y.ShouldBe(2);
+            Assert.AreEqual(item.X, 3);
+            Assert.AreEqual(item.Y, 2);
 
             item = path[0];
-            item.X.ShouldBe(4);
-            item.Y.ShouldBe(2);
+            Assert.AreEqual(item.X, 4);
+            Assert.AreEqual(item.Y, 2);
 
         }
         [Test]
@@ -184,31 +187,31 @@ namespace AStar.Tests
             _grid[2, 3] = 0;
             var path = _pathFinder.FindPath(new Point(1, 1), new Point(4, 2));
             Helper.Print(_grid, path);
-            path.Count.ShouldBe(6);
+            Assert.AreEqual(path.Count, 6);
 
             var item = path[5];
-            item.X.ShouldBe(1);
-            item.Y.ShouldBe(1);
+            Assert.AreEqual(item.X, 1);
+            Assert.AreEqual(item.Y, 1);
 
             item = path[4];
-            item.X.ShouldBe(1);
-            item.Y.ShouldBe(2);
+            Assert.AreEqual(item.X, 1);
+            Assert.AreEqual(item.Y, 2);
 
             item = path[3];
-            item.X.ShouldBe(1);
-            item.Y.ShouldBe(3);
+            Assert.AreEqual(item.X, 1);
+            Assert.AreEqual(item.Y, 3);
 
             item = path[2];
-            item.X.ShouldBe(2);
-            item.Y.ShouldBe(4);
+            Assert.AreEqual(item.X, 2);
+            Assert.AreEqual(item.Y, 4);
 
             item = path[1];
-            item.X.ShouldBe(3);
-            item.Y.ShouldBe(3);
+            Assert.AreEqual(item.X, 3);
+            Assert.AreEqual(item.Y, 3);
 
             item = path[0];
-            item.X.ShouldBe(4);
-            item.Y.ShouldBe(2);
+            Assert.AreEqual(item.X, 4);
+            Assert.AreEqual(item.Y, 2);
         }
 
         [Test]
@@ -223,7 +226,7 @@ namespace AStar.Tests
             _grid[2, 6] = 0;
             _grid[2, 7] = 0;
             var path = _pathFinder.FindPath(new Point(1, 1), new Point(4, 2));
-            path.ShouldBe(null);
+            Assert.AreEqual(path, null);
         }
 
         private static byte[,] CreateMatrix(int height, int width)

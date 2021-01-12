@@ -1,0 +1,12 @@
+﻿{
+    "name": "AStar.Tests",
+    "references": [
+        "AStar.Runtime"
+    ],
+    "optionalUnityReferences": [
+        "TestAssemblies"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ]
+}
