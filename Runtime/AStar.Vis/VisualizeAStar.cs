@@ -8,7 +8,7 @@ using UnityEngine;
 using Debug = UnityEngine.Debug;
 using Object = UnityEngine.Object;
 
-namespace AStar.Editor
+namespace AStar.Visualize
 {
     public class VisualizeAStar : MonoBehaviour
     {
@@ -18,6 +18,8 @@ namespace AStar.Editor
 
         CellPosition _Start;
         CellPosition _End;
+
+        bool _IsDirty;
 
         void Awake()
         {
@@ -43,19 +45,28 @@ namespace AStar.Editor
                 return;
             }
 
-            if (Mouse.current.leftButton.isPressed)
+            if (_Start == null)
+            {
+                _Start = _Grid.GetCell(0,0);
+                _Start.SelectAsStart();
+            }
+
+            if (Mouse.current.rightButton.isPressed)
             {
                 SetToItemUnderMouse(pos, ref _Start);
                 _Start.SelectAsStart();
             }
-            if (Mouse.current.rightButton.isPressed)
+            if (Mouse.current.leftButton.isPressed)
             {
                 SetToItemUnderMouse(pos, ref _End);
                 _End.SelectAsEnd();
             }
 
-            if (_Start != null && _End != null)
+            if (_IsDirty
+                    && _Start != null
+                    && _End != null)
             {
+                _IsDirty = false;
                 NavigateBetween(_Start, _End);
             }
         }
@@ -68,6 +79,7 @@ namespace AStar.Editor
                 cell.ClearSelection();
             }
             cell = _Grid.FindClosestToPoint(world_pos);
+            _IsDirty = true;
         }
 
         void NavigateBetween(CellPosition start, CellPosition destination)
@@ -78,6 +90,7 @@ namespace AStar.Editor
             }
             _Start.SelectAsStart();
             _End.SelectAsEnd();
+            _Grid.HighlightPath(_Start, _End);
         }
         
     }

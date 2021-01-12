@@ -40,6 +40,7 @@ namespace AStar
                     : new sbyte[,] { { 0, -1 }, { 1, 0 }, { 0, 1 }, { -1, 0 } };
         }
 
+        // Path is returned from end to start.
         public List<PathFinderNode> FindPath(Point start, Point end)
         {
             lock (this)

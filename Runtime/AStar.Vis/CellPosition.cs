@@ -7,7 +7,7 @@ using UnityEngine;
 using Debug = UnityEngine.Debug;
 using Object = UnityEngine.Object;
 
-namespace AStar.Editor
+namespace AStar.Visualize
 {
     public class CellPosition : MonoBehaviour
     {
@@ -38,9 +38,8 @@ namespace AStar.Editor
             }
             else
             {
-                var impedence = Color.cyan;
-                impedence.r = _TraversalCost / byte.MaxValue;
-                _Visual.color = impedence;
+                float val = _TraversalCost / (float)byte.MaxValue;
+                _Visual.color = Color.Lerp(Color.white, Color.red, val * 0.5f);
             }
         }
 
@@ -58,6 +57,27 @@ namespace AStar.Editor
         {
             _Visual.color = Color.blue;
         }
+
+        public void ShowError()
+        {
+            _Visual.color = Color.red;
+        }
+
+#if UNITY_EDITOR
+        GUIStyle _DebugText;
+        void OnDrawGizmos() //~ OnDrawGizmosSelected()
+        {
+            if (_DebugText == null)
+            {
+                _DebugText = new GUIStyle();
+                _DebugText.normal.textColor = Color.blue;
+                _DebugText.fontStyle = FontStyle.Bold;
+            }
+
+            var pos = transform.position;
+            UnityEditor.Handles.Label(pos, $"cell({_Pos.x},{_Pos.y})\ncost:{_TraversalCost}", _DebugText);
+        }
+#endif
 
     }
 }
