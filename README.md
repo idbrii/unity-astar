@@ -39,3 +39,7 @@ SpriteRenderers to be your grid and use CellGrid to display queries.
 * CellGrid - Manager for visualizing the grid using the list of sprites.
 * DrawPathOnClick - Makes the grid clickable for easier demonstration.
 
+You can use your own ICellVisual to control how grid cells are visualized or
+use the provided CellSprite (2D) or CellImage (Canvas).
+
+See the example scene: Runtime/AStar.Vis/example_pathfind_visualize.unity
