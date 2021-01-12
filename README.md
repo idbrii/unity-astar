@@ -16,3 +16,16 @@ Options allow for the use of diagonals and punishing direction changes.
     var pathfinder = new PathFinder(new byte[40,40], pathfinderOptions);
     
     var path = pathfinder.FindPath(new Point(1, 1), new Point(30, 30));
+
+
+## Dependencies
+
+The AStar Core implementation doesn't have any dependencies. The Tests and Vis use Unity.
+
+
+## Unity Installation
+
+Add this line to your Packages/manifest.json:
+
+    "com.github.idbrii.unity-astar": "https://github.com/idbrii/unity-astar.git#latest-release",
+
