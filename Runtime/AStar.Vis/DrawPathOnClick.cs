@@ -99,7 +99,7 @@ namespace AStar.Visualize
             if (_Pather == null)
             {
                 var grid = _GridInWorld._Grid;
-                Debug.Log($"Creating path for grid[{grid.GetLength(0)},{grid.GetLength(0)}]", this);
+                Debug.Log($"Creating path for grid[{grid.GetLength(0)},{grid.GetLength(1)}]", this);
                 var opts = new PathFinderOptions{
                     Diagonals = false,
                 };
